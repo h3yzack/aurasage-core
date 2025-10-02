@@ -1,0 +1,72 @@
+
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = "io.aurasage"
+version = "0.0.1-SNAPSHOT"
+
+base {
+    archivesName.set("aurasage-core")
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation platform('org.springframework.boot:spring-boot-dependencies:3.5.5')
+
+    api 'commons-codec:commons-codec:1.15'
+
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    compileOnly 'org.projectlombok:lombok:1.18.32'
+    annotationProcessor 'org.projectlombok:lombok:1.18.32'
+
+
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+    withSourcesJar()
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+// Add publishing configuration
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+            
+            // Optional: customize the published artifact details
+            groupId = project.group
+            artifactId = 'aurasage-core'
+            version = project.version
+            
+            pom {
+                name = 'Aurasage Core'
+                description = 'Core library for Aurasage application'
+                
+                developers {
+                    developer {
+                        id = 'aurasage-team'
+                        name = 'Aurasage Development Team'
+                    }
+                }
+            }
+        }
+    }
+    
+    repositories {
+        mavenLocal()
+    }
+}
