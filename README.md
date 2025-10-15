@@ -15,7 +15,7 @@ Add dependency to your project:
 
 ```gradle
 dependencies {
-    implementation 'io.aurasage:aurasage-core:0.0.1-SNAPSHOT'
+    implementation 'io.github.h3yzack:aurasage-core:${latest.version}'
 }
 ```
 
